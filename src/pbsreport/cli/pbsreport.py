@@ -2,6 +2,6 @@ import click
 
 
 @click.command()
-def pbsreport():
+def cli():
     """Provide metrics from a PBS server."""
     pass
