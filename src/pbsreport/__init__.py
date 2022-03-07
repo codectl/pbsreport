@@ -1,1 +1,1 @@
-from .cli.pbsreport import cli
+from .cli import cli
