@@ -1,9 +1,8 @@
-from dataclasses import dataclass
-
 import click
 import dotenv
 
-from .nodes import nodes
+from pbsreport.api.pbs import PBS
+from pbsreport.cli.nodes import nodes
 
 # load environment if exists
 dotenv.load_dotenv(".env")
@@ -13,12 +12,6 @@ defaults = {
     "PBS_EXEC": "/opt/pbs",
     "PBS_SERVER": "pbs",
 }
-
-@dataclass
-class Ctx:
-    server: str
-    home: str
-    exec: str
 
 
 @click.group()
@@ -43,9 +36,8 @@ class Ctx:
 @click.pass_context
 def cli(ctx, pbs_server, pbs_home, pbs_exec):
     """Provide metrics from a PBS server."""
-    ctx.obj = Ctx(
+    ctx.obj = PBS(
         server=pbs_server,
-        home=pbs_home,
         exec=pbs_exec
     )
 

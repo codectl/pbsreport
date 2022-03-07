@@ -2,6 +2,7 @@ import click
 
 
 @click.command()
-def nodes():
+@click.pass_obj
+def nodes(pbs):
     """Provide metrics from cluster nodes."""
-    print("Ran nodes")
+    pbs.nodes()
