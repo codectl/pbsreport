@@ -30,7 +30,7 @@ classifiers = [
 [tool.poetry.dependencies]
 click = "^8.0.4"
 marshmallow = "^3.14.1"
-python = "^3.8"
+python = "^3.7"
 python-dotenv = "^0.19.2"
 shell = "^1.0.1"
 
