@@ -48,6 +48,20 @@ optional = false
 python-versions = "*"
 
 [[package]]
+name = "marshmallow"
+version = "3.14.1"
+description = "A lightweight library for converting complex datatypes to and from native Python datatypes."
+category = "main"
+optional = false
+python-versions = ">=3.6"
+
+[package.extras]
+dev = ["pytest", "pytz", "simplejson", "mypy (==0.910)", "flake8 (==4.0.1)", "flake8-bugbear (==21.9.2)", "pre-commit (>=2.4,<3.0)", "tox"]
+docs = ["sphinx (==4.3.0)", "sphinx-issues (==1.2.0)", "alabaster (==0.7.12)", "sphinx-version-warning (==1.1.2)", "autodocsumm (==0.2.7)"]
+lint = ["mypy (==0.910)", "flake8 (==4.0.1)", "flake8-bugbear (==21.9.2)", "pre-commit (>=2.4,<3.0)"]
+tests = ["pytest", "pytz", "simplejson"]
+
+[[package]]
 name = "packaging"
 version = "21.3"
 description = "Core utilities for Python packages"
@@ -140,7 +154,7 @@ python-versions = ">=3.7"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "5dc7e01cb9e9cbce2d1a15f2dac1ea13eda9a598be4a6a931a4f880f1f03624a"
+content-hash = "871f79fff1dbedbf2fcaf119c4b24dbec9f674cbd42f6118de28d0fbd26a5f74"
 
 [metadata.files]
 atomicwrites = [
@@ -162,6 +176,10 @@ colorama = [
 iniconfig = [
     {file = "iniconfig-1.1.1-py2.py3-none-any.whl", hash = "sha256:011e24c64b7f47f6ebd835bb12a743f2fbe9a26d4cecaa7f53bc4f35ee9da8b3"},
     {file = "iniconfig-1.1.1.tar.gz", hash = "sha256:bc3af051d7d14b2ee5ef9969666def0cd1a000e121eaea580d4a313df4b37f32"},
+]
+marshmallow = [
+    {file = "marshmallow-3.14.1-py3-none-any.whl", hash = "sha256:04438610bc6dadbdddb22a4a55bcc7f6f8099e69580b2e67f5a681933a1f4400"},
+    {file = "marshmallow-3.14.1.tar.gz", hash = "sha256:4c05c1684e0e97fe779c62b91878f173b937fe097b356cd82f793464f5bc6138"},
 ]
 packaging = [
     {file = "packaging-21.3-py3-none-any.whl", hash = "sha256:ef103e05f519cdc783ae24ea4e2e0f508a9c99b2d4969652eed6a2e1ea5bd522"},
