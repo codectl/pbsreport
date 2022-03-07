@@ -3,6 +3,29 @@ name = "pbsreport"
 version = "0.1.0"
 description = "Utility for providing metrics from a PBS server"
 authors = ["Renato D. Teixeira <me@renatodamas.com>"]
+license = "MIT"
+readme = "README.md"
+homepage = ""
+repository = "https://github.com/rena2damas/pbsreport"
+documentation = ""
+keywords = [
+    "pbs",
+    "cli",
+    "click",
+    "python",
+    "python3"
+]
+classifiers = [
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Natural Language :: English",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10"
+]
+
 
 [tool.poetry.dependencies]
 click = "^8.0.4"
