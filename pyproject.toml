@@ -5,6 +5,7 @@ description = "Utility for providing metrics from a PBS server"
 authors = ["Renato D. Teixeira <me@renatodamas.com>"]
 
 [tool.poetry.dependencies]
+click = "^8.0.4"
 python = "^3.8"
 
 [tool.poetry.dev-dependencies]
