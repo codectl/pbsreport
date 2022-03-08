@@ -1,4 +1,4 @@
-from marshmallow import Schema, fields
+from marshmallow import Schema, fields, pre_load
 
 
 __all__ = ('NodeSchema',)
@@ -20,3 +20,8 @@ class NodeSchema(Schema):
     assigned_mem = fields.Integer(attribute="resources_assigned.mem")
     network = fields.String(attribute="resources_assigned.network")
     jobs = fields.List(fields.String())
+
+    @pre_load(pass_many=True)
+    def unwrap_envelope(self, data, many, **kwargs):
+        key = self.opts.plural_name if many else self.opts.name
+        return data[key]
