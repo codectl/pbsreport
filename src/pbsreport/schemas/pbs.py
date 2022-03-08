@@ -1,30 +1,45 @@
-from marshmallow import Schema, fields, pre_load
+from marshmallow import Schema, EXCLUDE, fields, post_load, pre_load
 
 
-__all__ = ('NodeSchema',)
+__all__ = ("NodeSchema", "NodesSchema")
 
 
 class NodeSchema(Schema):
+    hostname = fields.String(data_key='Mom')
     state = fields.String()
     comment = fields.String()
     queue = fields.String()
-    dloc = fields.String(attribute="resources_available.dloc")
-    arch = fields.String(attribute="resources_available.arch")
-    cpu_type = fields.String(attribute="resources_available.cpu_type")
-    node_type = fields.String(attribute="resources_available.node_type")
-    total_cpus = fields.Integer(attribute="resources_available.ncpus")
-    assigned_cpus = fields.Integer(attribute="resources_assigned.ncpus")
-    total_gpus = fields.Integer(attribute="resources_available.ngpus")
-    assigned_gpus = fields.Integer(attribute="resources_assigned.ngpus")
-    total_mem = fields.Integer(attribute="resources_available.mem")
-    assigned_mem = fields.Integer(attribute="resources_assigned.mem")
-    network = fields.String(attribute="resources_assigned.network")
+    resources_available = fields.Nested(Schema.from_dict({
+        "dloc": fields.String(),
+        "arch": fields.String(),
+        "cpu_type": fields.String(),
+        "node_type": fields.String(),
+        "network": fields.String(),
+        "cpus": fields.Integer(data_key='ncpus', load_default=0),
+        "gpus": fields.Integer(data_key='ngpus', load_default=0),
+        "mem": fields.String(load_default="0kb")
+    }), unknown=EXCLUDE)
+    resources_assigned = fields.Nested(Schema.from_dict({
+        "cpus": fields.Integer(data_key='ncpus', load_default=0),
+        "gpus": fields.Integer(data_key='ngpus', load_default=0),
+        "mem": fields.String(load_default="0kb")
+    }), unknown=EXCLUDE)
     jobs = fields.List(fields.String())
 
-    @pre_load(pass_many=True)
-    def unwrap_envelope(self, data, many, **kwargs):
+    class Meta:
+        unknown = EXCLUDE
+
+
+class NodesSchema(Schema):
+    nodes = fields.Dict(keys=fields.String(), values=fields.Nested(NodeSchema))
+
+    class Meta:
+        unknown = EXCLUDE
+
+    @post_load
+    def unwrap_envelope(self, data, **kwargs):
         unwrap = []
-        for key, value in data.items():
+        for key, value in data["nodes"].items():
             value["node"] = key
             unwrap.append(value)
         return unwrap
