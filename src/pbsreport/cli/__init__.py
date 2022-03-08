@@ -18,12 +18,14 @@ defaults = {
 @click.option(
     "--home", "pbs_home", envvar="PBS_HOME",
     help="location of PBS working directories",
+    type=click.Path(),
     default=defaults["PBS_HOME"],
     show_default=True
 )
 @click.option(
     "--exec", "pbs_exec", envvar="PBS_EXEC",
     help="location of PBS bin and sbin directories",
+    type=click.Path(),
     default=defaults["PBS_EXEC"],
     show_default=True
 )
