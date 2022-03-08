@@ -5,11 +5,13 @@ __all__ = ('NodeSchema',)
 
 
 class NodeSchema(Schema):
-    dloc = fields.String()
-    arch = fields.String()
     state = fields.String()
-    cpu_type = fields.String()
-    node_type = fields.String()
+    comment = fields.String()
+    queue = fields.String()
+    dloc = fields.String(attribute="resources_available.dloc")
+    arch = fields.String(attribute="resources_available.arch")
+    cpu_type = fields.String(attribute="resources_available.cpu_type")
+    node_type = fields.String(attribute="resources_available.node_type")
     total_cpus = fields.Integer(attribute="resources_available.ncpus")
     assigned_cpus = fields.Integer(attribute="resources_assigned.ncpus")
     total_gpus = fields.Integer(attribute="resources_available.ngpus")
