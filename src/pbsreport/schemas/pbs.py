@@ -23,5 +23,8 @@ class NodeSchema(Schema):
 
     @pre_load(pass_many=True)
     def unwrap_envelope(self, data, many, **kwargs):
-        key = self.opts.plural_name if many else self.opts.name
-        return data[key]
+        unwrap = []
+        for key, value in data.items():
+            value["node"] = key
+            unwrap.append(value)
+        return unwrap
