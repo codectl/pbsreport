@@ -20,6 +20,6 @@ class PBS:
 
         response = shell.Shell().run(cmd)
         if response.code != 0:
-            raise shell.CommandError()
+            raise shell.CommandError(response.errors())
         nodes = NodeSchema().load(data, many=True)
         print(nodes)
