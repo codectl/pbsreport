@@ -22,6 +22,6 @@ class PBS:
         response = shell.Shell().run(cmd)
         if response.code != 0:
             raise shell.CommandError(response.errors(raw=True))
-        data = response.output(raw=True)["nodes"]
+        data = json.load(response.output(raw=True))["nodes"]
         nodes = NodeSchema().load(data, many=True)
         print(nodes)
