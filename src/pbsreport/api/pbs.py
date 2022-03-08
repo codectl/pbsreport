@@ -1,6 +1,6 @@
 import json
 
-from shell import Shell
+import shell
 
 from pbsreport.schemas.pbs import NodeSchema
 
@@ -18,6 +18,8 @@ class PBS:
         flags = f"{flags}{' -v' if vnodes else ''}"
         cmd = f"{self._exec}/bin/pbsnodes{flags}"
 
-        data = Shell().run(cmd).output()
+        response = shell.Shell().run(cmd)
+        if response.code != 0:
+            raise shell.CommandError()
         nodes = NodeSchema().load(data, many=True)
         print(nodes)
