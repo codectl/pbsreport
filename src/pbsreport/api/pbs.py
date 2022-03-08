@@ -19,5 +19,5 @@ class PBS:
         cmd = f"{self._exec}/bin/pbsnodes{flags}"
 
         data = Shell().run(cmd).output()
-        nodes = NodeSchema().load(data)
+        nodes = NodeSchema().load(data, many=True)
         print(nodes)
