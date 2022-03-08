@@ -16,6 +16,7 @@ class PBS:
     def nodes(self, regex=None, vnodes=False, server=None, flags=''):
         flags = f" -s {server or self.server}"
         flags = f"{flags} -a{' -v' if vnodes else ''}"
+        flags = f"{flags} -F json"
         cmd = f"{self._exec}/bin/pbsnodes{flags}"
 
         response = shell.Shell().run(cmd)
