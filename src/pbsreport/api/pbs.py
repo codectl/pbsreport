@@ -5,6 +5,7 @@ from collections import defaultdict
 import shell
 import tabulate
 
+import pbsreport.utils as utils
 from pbsreport.schemas.pbs import NodesSchema
 
 __all__ = ("PBS", "PBSFormatter")
@@ -32,14 +33,16 @@ class PBSFormatter:
 
     @staticmethod
     def nodes(data: typing.List[dict], format="simple"):
-        headers = ["name", "queue", "state", "cpus (total/free)",
-                  "gpus (total/free)", "mem (total/free)",
-                  "cpu-type", "network", "comment"]
+        headers = ["name", "queue", "state", "cpus (t/f)",
+                  "gpus (t/f)", "mem (t/f)",
+                  "cpu type", "network", "comment"]
         table = [[
-            d["name"], d.get("queue", "-"), d["state"],
+            d["name"], d["queue"],
+            f"{utils.colored_state(d['state'])}",
             f"{d['resources_available']['cpus']} / {d['resources_assigned']['cpus']}",
             f"{d['resources_available']['gpus']} / {d['resources_assigned']['gpus']}",
             f"{d['resources_available']['mem']} / {d['resources_assigned']['mem']}",
             d["cpu_type"], d["network"], d["comment"]
         ] for d in data]
-        print(tabulate(table, headers=headers, format=format))
+
+        return tabulate.tabulate(table, headers=headers, tablefmt=format)
