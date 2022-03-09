@@ -1,11 +1,13 @@
 import json
+import typing
+from collections import defaultdict
 
 import shell
+import tabulate
 
 from pbsreport.schemas.pbs import NodesSchema
 
-
-__all__ = ('PBS',)
+__all__ = ("PBS", "PBSFormatter")
 
 
 class PBS:
@@ -23,5 +25,21 @@ class PBS:
         if response.code != 0:
             raise shell.CommandError(response.errors(raw=True))
         data = json.loads(response.output(raw=True))
-        nodes = NodesSchema().load(data)
-        print(nodes)
+        return NodesSchema().load(data)
+
+
+class PBSFormatter:
+
+    @staticmethod
+    def nodes(data: typing.List[dict], format="simple"):
+        headers = ["name", "queue", "state", "cpus (total/free)",
+                  "gpus (total/free)", "mem (total/free)",
+                  "cpu-type", "network", "comment"]
+        table = [[
+            d["name"], d.get("queue", "-"), d["state"],
+            f"{d['resources_available']['cpus']} / {d['resources_assigned']['cpus']}",
+            f"{d['resources_available']['gpus']} / {d['resources_assigned']['gpus']}",
+            f"{d['resources_available']['mem']} / {d['resources_assigned']['mem']}",
+            d["cpu_type"], d["network"], d["comment"]
+        ] for d in data]
+        print(tabulate(table, headers=headers, format=format))
