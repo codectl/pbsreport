@@ -1,6 +1,5 @@
 import json
 import typing
-from collections import defaultdict
 
 import shell
 import tabulate
