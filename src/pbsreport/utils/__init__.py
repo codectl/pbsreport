@@ -56,5 +56,13 @@ def convert_bytes(value: int, from_unit="b", to_unit="b"):
     return int(value * 2 ** factor)
 
 
-def bytes_as_int(value: str):
+def remove_units(value: str):
     return int(value.rstrip(string.ascii_lowercase))
+
+
+def human_size(bytes: int):
+    for unit in ["b", "Kb", "Mb", "Gb", "Tb", "Pb", "Eb", "Zb"]:
+        if abs(bytes) < 1024:
+            return f"{bytes:.0f}{unit}"
+        bytes /= 1024
+    return f"{bytes:.0f}Yb"
