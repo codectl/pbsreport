@@ -17,3 +17,5 @@ def test_convert_bytes():
     assert utils.convert_bytes(1, from_unit="y", to_unit="b") == 1024 ** 8
     with pytest.raises(ValueError):
         utils.convert_bytes(-1, from_unit="kb", to_unit="b")
+        utils.convert_bytes(1, from_unit="x", to_unit="b")
+        utils.convert_bytes(1, from_unit="b", to_unit="x")

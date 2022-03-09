@@ -21,11 +21,15 @@ def colored_state(state):
 
 
 def convert_bytes(value: int, from_unit="b", to_unit="b"):
-    logs = {
+    factors = {
         'b': 0, 'k': 10, 'm': 20, 'g': 30,
         't': 40, 'p': 50, 'e': 60, 'z': 70, 'y': 80
     }
     if value < 0:
         raise ValueError("value must be >= 0")
-    factor = logs[from_unit[0]] - logs[to_unit[0]]
+    from_unit_val = from_unit[0]
+    to_unit_val = to_unit[0]
+    if from_unit_val not in factors or to_unit_val not in factors:
+        raise ValueError("invalid unit")
+    factor = factors[from_unit_val] - factors[to_unit[to_unit_val]]
     return int(value * 2 ** factor)
