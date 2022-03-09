@@ -52,7 +52,5 @@ class TestCliNodes:
         mocker.patch.object(mock, "returncode", new=0)
         result = cli_runner.invoke(cli, ["nodes"])
 
-        print(result.stdout)
-        print(result.exception)
         assert result.exit_code == 0
-        # assert False
+        assert len(result.stdout.splitlines()) == 3
