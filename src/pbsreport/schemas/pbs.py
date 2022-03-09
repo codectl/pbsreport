@@ -5,7 +5,7 @@ __all__ = ("NodeSchema", "NodesSchema")
 
 
 class NodeSchema(Schema):
-    hostname = fields.String(data_key='Mom')
+    fqdn = fields.String(data_key='Mom')
     state = fields.String()
     comment = fields.String()
     queue = fields.String()
@@ -37,9 +37,5 @@ class NodesSchema(Schema):
         unknown = EXCLUDE
 
     @post_load
-    def unwrap_envelope(self, data, **kwargs):
-        unwrap = []
-        for key, value in data["nodes"].items():
-            value["node"] = key
-            unwrap.append(value)
-        return unwrap
+    def unwrap_envelope(self, data, **_):
+        return [{"name": key, **value} for key, value in data["nodes"].items()]

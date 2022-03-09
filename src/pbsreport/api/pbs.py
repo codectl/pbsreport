@@ -2,7 +2,7 @@ import json
 
 import shell
 
-from pbsreport.schemas.pbs import NodeSchema
+from pbsreport.schemas.pbs import NodesSchema
 
 
 __all__ = ('PBS',)
@@ -22,6 +22,6 @@ class PBS:
         response = shell.Shell().run(cmd)
         if response.code != 0:
             raise shell.CommandError(response.errors(raw=True))
-        data = json.loads(response.output(raw=True))["nodes"]
-        nodes = NodeSchema().load(data, many=True)
+        data = json.loads(response.output(raw=True))
+        nodes = NodesSchema().load(data)
         print(nodes)
