@@ -1,8 +1,8 @@
 from functools import partial
 
-from marshmallow import Schema, EXCLUDE, fields, post_load, pre_load
+from marshmallow import Schema, EXCLUDE, fields, post_load
 
-import pbsreport.utils as utils
+from pbsreport import utils
 
 __all__ = ("NodeSchema", "NodesSchema")
 
