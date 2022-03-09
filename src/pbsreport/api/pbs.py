@@ -5,7 +5,7 @@ from collections import defaultdict
 import shell
 import tabulate
 
-import pbsreport.utils as utils
+from pbsreport import utils
 from pbsreport.schemas.pbs import NodesSchema
 
 __all__ = ("PBS", "PBSFormatter")
