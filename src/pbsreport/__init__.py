@@ -5,5 +5,5 @@ except ImportError:
 
 from .cli import cli
 
-
+__all__ = (cli,)
 __version__ = metadata.version("pbsreport")
