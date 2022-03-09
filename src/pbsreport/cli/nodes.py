@@ -7,4 +7,5 @@ from pbsreport.api.pbs import PBSFormatter
 @click.pass_obj
 def nodes(pbs):
     """Provide metrics from cluster nodes."""
-    PBSFormatter.nodes(data=pbs.nodes())
+    stdout = PBSFormatter.nodes(data=pbs.nodes())
+    print(stdout)
