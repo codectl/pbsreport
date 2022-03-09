@@ -2,25 +2,43 @@ import string
 
 
 class bcolors:
-    HEADER = "\033[95m"
-    OKBLUE = "\033[94m"
-    OKCYAN = "\033[96m"
-    OKGREEN = "\033[92m"
-    WARNING = "\033[93m"
-    FAIL = "\033[91m"
     ENDC = "\033[0m"
     BOLD = "\033[1m"
     UNDERLINE = "\033[4m"
+    GREY = '\033[90m'
+    BLACK = '\033[90m'
+    RED = '\033[91m'
+    GREEN = '\033[92m'
+    YELLOW = '\033[93m'
+    BLUE = '\033[94m'
+    MAGENTA = '\033[95m'
+    CYAN = '\033[96m'
+    WHITE = '\033[97m'
+    DEFAULT = '\033[99m'
 
 
-def colored_state(state):
+def color_state(state: str):
     if state == "free":
-        color = bcolors.OKGREEN
+        return bcolors.GREEN
     elif state == "busy":
-        color = bcolors.FAIL
+        return bcolors.RED
     else:
-        color = bcolors.WARNING
-    return f"{color}{state}{bcolors.ENDC}"
+        return bcolors.YELLOW
+
+
+def color_resource(available: int, free: int):
+    if available == 0:
+        return bcolors.DEFAULT
+    elif free == 0:
+        return bcolors.RED
+    elif free == available:
+        return bcolors.GREEN
+    else:
+        return bcolors.YELLOW
+
+
+def colored_line(line: str, color: str):
+    return f"{color}{line}{bcolors.ENDC}"
 
 
 def convert_bytes(value: int, from_unit="b", to_unit="b"):
@@ -34,7 +52,7 @@ def convert_bytes(value: int, from_unit="b", to_unit="b"):
     to_unit_val = to_unit[0]
     if from_unit_val not in factors or to_unit_val not in factors:
         raise ValueError("invalid unit")
-    factor = factors[from_unit_val] - factors[to_unit[to_unit_val]]
+    factor = factors[from_unit_val] - factors[to_unit_val]
     return int(value * 2 ** factor)
 
 
