@@ -1,3 +1,6 @@
+import string
+
+
 class bcolors:
     HEADER = "\033[95m"
     OKBLUE = "\033[94m"
@@ -33,3 +36,7 @@ def convert_bytes(value: int, from_unit="b", to_unit="b"):
         raise ValueError("invalid unit")
     factor = factors[from_unit_val] - factors[to_unit[to_unit_val]]
     return int(value * 2 ** factor)
+
+
+def bytes_as_int(value):
+    return int(value.rstrip(string.ascii_lowercase))
