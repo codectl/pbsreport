@@ -18,3 +18,19 @@ def colored_state(state):
     else:
         color = bcolors.WARNING
     return f"{color}{state}{bcolors.ENDC}"
+
+
+def convert_size(value: int, from_unit="b", to_unit="b"):
+    logs = {
+        'b': 0, 'k': 10, 'm': 20, 'g': 30,
+        't': 40, 'p': 50, 'e': 60, 'z': 70, 'y': 80
+    }
+    if value < 0:
+        raise ValueError("")
+    factor = logs[from_unit[0]] - logs[to_unit[0]]
+    return int(value * 2 ** factor)
+
+
+def size_as_int(value, **kwargs):
+    """Remove trailing characters from size conversion."""
+    return int(convert_size(value, **kwargs).rstrip(string.ascii_lowercase))
