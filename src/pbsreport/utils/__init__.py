@@ -26,6 +26,6 @@ def convert_bytes(value: int, from_unit="b", to_unit="b"):
         't': 40, 'p': 50, 'e': 60, 'z': 70, 'y': 80
     }
     if value < 0:
-        raise ValueError("")
+        raise ValueError("value must be >= 0")
     factor = logs[from_unit[0]] - logs[to_unit[0]]
     return int(value * 2 ** factor)
