@@ -33,15 +33,29 @@ class PBSFormatter:
 
     @staticmethod
     def nodes(data: typing.List[dict], format="simple"):
-        headers = ["name", "queue", "state", "cpus (t/f)",
-                  "gpus (t/f)", "mem (t/f)",
-                  "cpu type", "network", "comment"]
+        def resource(node_data, resource_type):
+            available = node_data['resources_available'][resource_type]
+            assigned = node_data['resources_assigned'][resource_type]
+            if resource_type == "mem":
+                available = utils.convert_bytes(value=utils.bytes_as_int(available), from_unit="kb", to_unit="gb")
+                assigned = utils.convert_bytes(value=utils.bytes_as_int(assigned), from_unit="kb", to_unit="gb")
+                free = available - assigned
+                line = f"{free}Gb/{available}Gb"
+            else:
+                free = int(available) - int(assigned)
+                line = f"{free}/{available}"
+            color = utils.color_resource(available=available, free=free)
+            return utils.colored_line(line=line, color=color)
+
+        headers = ["name", "queue", "state", "cpus (f/t)",
+                   "gpus (f/t)", "mem (f/t)",
+                   "cpu type", "network", "comment"]
         table = [[
             d["name"], d["queue"],
-            f"{utils.colored_state(d['state'])}",
-            f"{d['resources_available']['cpus']} / {d['resources_assigned']['cpus']}",
-            f"{d['resources_available']['gpus']} / {d['resources_assigned']['gpus']}",
-            f"{d['resources_available']['mem']} / {d['resources_assigned']['mem']}",
+            utils.colored_line(line=d['state'], color=utils.color_state(d['state'])),
+            resource(node_data=d, resource_type="cpus"),
+            resource(node_data=d, resource_type="gpus"),
+            resource(node_data=d, resource_type="mem"),
             d["cpu_type"], d["network"], d["comment"]
         ] for d in data]
 
