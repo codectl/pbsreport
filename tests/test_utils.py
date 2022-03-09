@@ -1,6 +1,6 @@
 import pytest
 
-import pbsreport.utils as utils
+from pbsreport import utils
 
 
 def test_convert_bytes():
