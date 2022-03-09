@@ -21,11 +21,21 @@ class NodeSchema(Schema):
     state = fields.String(load_default="-")
     comment = fields.String(load_default="-")
     queue = fields.String(load_default="-")
-    dloc = fields.Function(data_key="resources_available", deserialize=lambda x: x.get("dloc", "-"))
-    arch = fields.Function(data_key="resources_available", deserialize=lambda x: x.get("arch", "-"))
-    cpu_type = fields.Function(data_key="resources_available", deserialize=lambda x: x.get("cpu_type", "-"))
-    node_type = fields.Function(data_key="resources_available", deserialize=lambda x: x.get("node_type", "-"))
-    network = fields.Function(data_key="resources_available", deserialize=lambda x: x.get("network", "-"))
+    dloc = fields.Function(
+        data_key="resources_available", deserialize=lambda x: x.get("dloc", "-")
+    )
+    arch = fields.Function(
+        data_key="resources_available", deserialize=lambda x: x.get("arch", "-")
+    )
+    cpu_type = fields.Function(
+        data_key="resources_available", deserialize=lambda x: x.get("cpu_type", "-")
+    )
+    node_type = fields.Function(
+        data_key="resources_available", deserialize=lambda x: x.get("node_type", "-")
+    )
+    network = fields.Function(
+        data_key="resources_available", deserialize=lambda x: x.get("network", "-")
+    )
     resources_available = fields.Nested(ResourceSchema)
     resources_assigned = fields.Nested(ResourceSchema)
     jobs = fields.List(fields.String(), load_default=[])
@@ -36,8 +46,12 @@ class NodeSchema(Schema):
     @post_load
     def unwrap_envelope(self, data, **_):
         func = partial(utils.convert_bytes, from_unit="kb", to_unit="b")
-        data["resources_available"]["mem"] = func(utils.remove_units(data["resources_available"]["mem"]))
-        data["resources_assigned"]["mem"] = func(utils.remove_units(data["resources_assigned"]["mem"]))
+        data["resources_available"]["mem"] = func(
+            utils.remove_units(data["resources_available"]["mem"])
+        )
+        data["resources_assigned"]["mem"] = func(
+            utils.remove_units(data["resources_assigned"]["mem"])
+        )
         return data
 
 

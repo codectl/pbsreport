@@ -17,10 +17,7 @@ def nodes_data():
                 "ntype": "PBS",
                 "state": "free",
                 "pcpus": 56,
-                "jobs": [
-                    "110298.hpcnode0",
-                    "110609.hpcnode0"
-                ],
+                "jobs": ["110298.hpcnode0", "110609.hpcnode0"],
                 "resources_available": {
                     "arch": "linux",
                     "centos6_node": "no",
@@ -29,26 +26,24 @@ def nodes_data():
                     "mem": "384000000kb",
                     "ncpus": 56,
                     "Qlist": "normal",
-                    "vnode": "hpcnode03"
+                    "vnode": "hpcnode03",
                 },
-                "resources_assigned": {
-                    "mem": "278921216kb",
-                    "ncpus": 32
-                },
+                "resources_assigned": {"mem": "278921216kb", "ncpus": 32},
                 "resv_enable": "True",
                 "sharing": "default_shared",
                 "last_state_change_time": 1606093393,
-                "last_used_time": 1606111932
+                "last_used_time": 1606111932,
             }
-        }
+        },
     }
 
 
 class TestCliNodes:
-
     def test_valid_nodes(self, cli_runner, nodes_data, mocker):
         mock = mocker.patch.object(subprocess, "Popen").return_value
-        mocker.patch.object(mock, "communicate", return_value=(json.dumps(nodes_data), ""))
+        mocker.patch.object(
+            mock, "communicate", return_value=(json.dumps(nodes_data), "")
+        )
         mocker.patch.object(mock, "returncode", new=0)
         result = cli_runner.invoke(cli, ["nodes"])
 

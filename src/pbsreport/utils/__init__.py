@@ -5,16 +5,16 @@ class bcolors:
     ENDC = "\033[0m"
     BOLD = "\033[1m"
     UNDERLINE = "\033[4m"
-    GREY = '\033[90m'
-    BLACK = '\033[90m'
-    RED = '\033[91m'
-    GREEN = '\033[92m'
-    YELLOW = '\033[93m'
-    BLUE = '\033[94m'
-    MAGENTA = '\033[95m'
-    CYAN = '\033[96m'
-    WHITE = '\033[97m'
-    DEFAULT = '\033[99m'
+    GREY = "\033[90m"
+    BLACK = "\033[90m"
+    RED = "\033[91m"
+    GREEN = "\033[92m"
+    YELLOW = "\033[93m"
+    BLUE = "\033[94m"
+    MAGENTA = "\033[95m"
+    CYAN = "\033[96m"
+    WHITE = "\033[97m"
+    DEFAULT = "\033[99m"
 
 
 def color_state(state: str):
@@ -43,8 +43,15 @@ def colored_line(line: str, color: str):
 
 def convert_bytes(value: int, from_unit="b", to_unit="b"):
     factors = {
-        'b': 0, 'k': 10, 'm': 20, 'g': 30,
-        't': 40, 'p': 50, 'e': 60, 'z': 70, 'y': 80
+        "b": 0,
+        "k": 10,
+        "m": 20,
+        "g": 30,
+        "t": 40,
+        "p": 50,
+        "e": 60,
+        "z": 70,
+        "y": 80,
     }
     if value < 0:
         raise ValueError("value must be >= 0")
@@ -53,7 +60,7 @@ def convert_bytes(value: int, from_unit="b", to_unit="b"):
     if from_unit_val not in factors or to_unit_val not in factors:
         raise ValueError("invalid unit")
     factor = factors[from_unit_val] - factors[to_unit_val]
-    return int(value * 2 ** factor)
+    return int(value * 2**factor)
 
 
 def remove_units(value: str):
