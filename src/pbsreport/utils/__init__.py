@@ -38,5 +38,5 @@ def convert_bytes(value: int, from_unit="b", to_unit="b"):
     return int(value * 2 ** factor)
 
 
-def bytes_as_int(value):
+def bytes_as_int(value: str):
     return int(value.rstrip(string.ascii_lowercase))

@@ -24,4 +24,3 @@ def test_convert_bytes():
 def test_bytes_as_int():
     assert utils.bytes_as_int("1000b") == 1000
     assert utils.bytes_as_int("1000kb") == 1000
-    assert utils.bytes_as_int(1000) == 1000
