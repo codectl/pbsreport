@@ -36,14 +36,10 @@ class PBSFormatter:
         def resource(node_data, resource_type):
             available = node_data['resources_available'][resource_type]
             assigned = node_data['resources_assigned'][resource_type]
+            free = available - assigned
+            line = f"{free}/{available}"
             if resource_type == "mem":
-                available = utils.convert_bytes(value=utils.bytes_as_int(available), from_unit="kb", to_unit="gb")
-                assigned = utils.convert_bytes(value=utils.bytes_as_int(assigned), from_unit="kb", to_unit="gb")
-                free = available - assigned
-                line = f"{free}Gb/{available}Gb"
-            else:
-                free = int(available) - int(assigned)
-                line = f"{free}/{available}"
+                line = f"{utils.human_size(free)}/{utils.human_size(available)}"
             color = utils.color_resource(available=available, free=free)
             return utils.colored_line(line=line, color=color)
 

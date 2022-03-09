@@ -1,5 +1,8 @@
+from functools import partial
+
 from marshmallow import Schema, EXCLUDE, fields, post_load, pre_load
 
+import pbsreport.utils as utils
 
 __all__ = ("NodeSchema", "NodesSchema")
 
@@ -29,6 +32,13 @@ class NodeSchema(Schema):
 
     class Meta:
         unknown = EXCLUDE
+
+    @post_load
+    def unwrap_envelope(self, data, **_):
+        func = partial(utils.convert_bytes, from_unit="kb", to_unit="b")
+        data["resources_available"]["mem"] = func(utils.remove_units(data["resources_available"]["mem"]))
+        data["resources_assigned"]["mem"] = func(utils.remove_units(data["resources_assigned"]["mem"]))
+        return data
 
 
 class NodesSchema(Schema):
