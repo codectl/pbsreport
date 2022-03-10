@@ -82,4 +82,4 @@ class PBSFormatter:
     @staticmethod
     def _truncate_column(column):
         column = str(column)
-        return (column[:90] + '..') if len(column) > 75 else column
+        return (column[:30] + '..') if len(column) > 30 else column
