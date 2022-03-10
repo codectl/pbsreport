@@ -61,6 +61,17 @@ class TestCliNodes:
         assert result.exit_code == 0
         assert len(result.stdout.splitlines()) == 3
 
+    def test_partial_node_lookup(self, cli_runner, nodes_data, mocker):
+        mock = mocker.patch.object(subprocess, "Popen").return_value
+        mocker.patch.object(
+            mock, "communicate", return_value=(json.dumps(nodes_data), "")
+        )
+        mocker.patch.object(mock, "returncode", new=0)
+        result = cli_runner.invoke(cli, ["nodes", "hpc"])
+
+        assert result.exit_code == 0
+        assert len(result.stdout.splitlines()) == 3
+
     def test_missing_node_lookup(self, cli_runner, nodes_data, mocker):
         mock = mocker.patch.object(subprocess, "Popen").return_value
         mocker.patch.object(
@@ -71,3 +82,4 @@ class TestCliNodes:
 
         assert result.exit_code == 0
         assert len(result.stdout.splitlines()) == 2
+
