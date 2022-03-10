@@ -13,8 +13,10 @@ defaults = {
     "PBS_SERVER": "pbs",
 }
 
+ctx_settings={"help_option_names": ["-h", "--help"]}
 
-@click.group(context_settings={"help_option_names": ['-h', '--help']})
+
+@click.group(context_settings=ctx_settings)
 @click.option(
     "--home",
     "pbs_home",
