@@ -82,4 +82,4 @@ def human_size(bytes: int):
 
 
 def is_vnode(name: str) -> bool:
-    return bool(re.match(r"[\d\D]+\[\d\]]", name))
+    return bool(re.match(r"[\d\D]+\[\d\]", name))
