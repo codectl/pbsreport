@@ -21,9 +21,9 @@ def test_convert_bytes():
         utils.convert_bytes(1, from_unit="b", to_unit="x")
 
 
-def test_bytes_as_int():
-    assert utils.remove_units("1000b") == 1000
-    assert utils.remove_units("1000kb") == 1000
+def test_bytes_split():
+    assert utils.bytes_split("1000b") == (1000, "b")
+    assert utils.bytes_split("1000kb") == (1000, "kb")
 
 
 def test_human_size():
