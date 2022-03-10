@@ -8,9 +8,7 @@ from pbsreport.api.pbs import PBSFormatter
     "--sort",
     "sort",
     help="column to sort by",
-    type=click.Choice(
-        ["name", "queue", "state", "cpus", "gpus", "mem", "cpu_type", "comment"]
-    ),
+    type=click.Choice(["name", "queue", "state", "cpu_type", "comment"]),
     default="name",
     show_default=True,
 )
