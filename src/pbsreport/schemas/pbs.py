@@ -1,5 +1,3 @@
-from functools import partial
-
 from marshmallow import Schema, EXCLUDE, fields, post_load
 
 from pbsreport import utils
