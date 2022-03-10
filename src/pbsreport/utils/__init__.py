@@ -79,3 +79,7 @@ def human_size(bytes: int):
             return f"{bytes:.0f}{unit}"
         bytes /= 1024
     return f"{bytes:.0f}Yb"
+
+
+def is_vnode(name: str) -> bool:
+    return bool(re.match(r"[\d\D]+\[\d\]]", name))
