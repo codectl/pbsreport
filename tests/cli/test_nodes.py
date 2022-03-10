@@ -39,7 +39,7 @@ def nodes_data():
 
 
 class TestCliNodes:
-    def test_valid_nodes(self, cli_runner, nodes_data, mocker):
+    def test_valid_nodes_no_args(self, cli_runner, nodes_data, mocker):
         mock = mocker.patch.object(subprocess, "Popen").return_value
         mocker.patch.object(
             mock, "communicate", return_value=(json.dumps(nodes_data), "")
@@ -49,3 +49,25 @@ class TestCliNodes:
 
         assert result.exit_code == 0
         assert len(result.stdout.splitlines()) == 3
+
+    def test_existing_node_lookup(self, cli_runner, nodes_data, mocker):
+        mock = mocker.patch.object(subprocess, "Popen").return_value
+        mocker.patch.object(
+            mock, "communicate", return_value=(json.dumps(nodes_data), "")
+        )
+        mocker.patch.object(mock, "returncode", new=0)
+        result = cli_runner.invoke(cli, ["nodes", "hpcnode03"])
+
+        assert result.exit_code == 0
+        assert len(result.stdout.splitlines()) == 3
+
+    def test_missing_node_lookup(self, cli_runner, nodes_data, mocker):
+        mock = mocker.patch.object(subprocess, "Popen").return_value
+        mocker.patch.object(
+            mock, "communicate", return_value=(json.dumps(nodes_data), "")
+        )
+        mocker.patch.object(mock, "returncode", new=0)
+        result = cli_runner.invoke(cli, ["nodes", "hpcnode99"])
+
+        assert result.exit_code == 0
+        assert len(result.stdout.splitlines()) == 2
