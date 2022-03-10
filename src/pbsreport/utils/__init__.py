@@ -69,7 +69,7 @@ def convert_raw_bytes(value: str, to_unit="b"):
 
 
 def bytes_split(value: str) -> tuple:
-    b, u = re.match(r"(\d+)\s*(\w+)", value).groups()
+    b, u = re.match(r"([+-]?\d+)\s*(\w+)", value).groups()
     return int(b), u
 
 

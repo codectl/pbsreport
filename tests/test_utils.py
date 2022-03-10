@@ -14,11 +14,26 @@ def test_convert_bytes():
     assert utils.convert_bytes(1, from_unit="gb", to_unit="mb") == 1024
     assert utils.convert_bytes(1, from_unit="gb", to_unit="kb") == 1024**2
     assert utils.convert_bytes(1, from_unit="gb", to_unit="b") == 1024**3
-    assert utils.convert_bytes(1, from_unit="y", to_unit="b") == 1024**8
+    assert utils.convert_bytes(1, from_unit="yb", to_unit="b") == 1024**8
     with pytest.raises(ValueError):
         utils.convert_bytes(-1, from_unit="kb", to_unit="b")
         utils.convert_bytes(1, from_unit="x", to_unit="b")
         utils.convert_bytes(1, from_unit="b", to_unit="x")
+
+
+def test_convert_raw_bytes():
+    assert utils.convert_raw_bytes("1000b", to_unit="b") == 1000
+    assert utils.convert_raw_bytes("1024b", to_unit="b") == 1024
+    assert utils.convert_raw_bytes("1kb", to_unit="b") == 1024
+    assert utils.convert_raw_bytes("2kb", to_unit="b") == 2048
+    assert utils.convert_raw_bytes("1mb", to_unit="kb") == 1024
+    assert utils.convert_raw_bytes("1gb", to_unit="mb") == 1024
+    assert utils.convert_raw_bytes("1gb", to_unit="kb") == 1024**2
+    assert utils.convert_raw_bytes("1yb", to_unit="bb") == 1024**8
+    with pytest.raises(ValueError):
+        utils.convert_raw_bytes("-1b", to_unit="b")
+        utils.convert_raw_bytes("1x", to_unit="b")
+        utils.convert_raw_bytes("1b", to_unit="x")
 
 
 def test_bytes_split():
