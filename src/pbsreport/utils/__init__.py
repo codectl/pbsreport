@@ -20,7 +20,7 @@ class bcolors:
 def color_state(state: str):
     if state == "free":
         return bcolors.GREEN
-    elif state == "busy":
+    elif any(bad_state in state for bad_state in ["offline", "down", "busy"]):
         return bcolors.RED
     else:
         return bcolors.YELLOW
