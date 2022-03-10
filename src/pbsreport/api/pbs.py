@@ -29,7 +29,8 @@ class PBS:
         parsed_data = NodesSchema().load(data)
         sorted_data = sorted(parsed_data, key=operator.itemgetter(sort))
         return [
-            d for d in sorted_data
+            d
+            for d in sorted_data
             if name in d["name"] and (utils.is_vnode(d["name"]) if vnodes else True)
         ]
 
