@@ -1,4 +1,4 @@
-import string
+import re
 
 
 class bcolors:
@@ -63,8 +63,14 @@ def convert_bytes(value: int, from_unit="b", to_unit="b"):
     return int(value * 2**factor)
 
 
-def remove_units(value: str):
-    return int(value.rstrip(string.ascii_lowercase))
+def convert_raw_bytes(value: str, to_unit="b"):
+    b, u = bytes_split(value)
+    return convert_bytes(value=b, from_unit=u, to_unit=to_unit)
+
+
+def bytes_split(value: str) -> tuple:
+    b, u = re.match(r"(\d+)\s*(\w+)", value).groups()
+    return int(b), u
 
 
 def human_size(bytes: int):
