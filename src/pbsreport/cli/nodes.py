@@ -12,8 +12,14 @@ from pbsreport.api.pbs import PBSFormatter
     default="name",
     show_default=True,
 )
+@click.argument(
+    'name', nargs=1,
+    help="full or partial node name to search by",
+    type=str,
+    default=""
+)
 @click.pass_obj
-def nodes(pbs, sort):
+def nodes(pbs, sort, name):
     """Provide metrics from cluster nodes."""
-    stdout = PBSFormatter.nodes(data=pbs.nodes(sort=sort))
+    stdout = PBSFormatter.nodes(data=pbs.nodes(name=name, sort=sort))
     print(stdout)
