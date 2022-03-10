@@ -2,7 +2,7 @@ import click
 import dotenv
 
 from pbsreport.api.pbs import PBS
-from pbsreport.cli.nodes import nodes
+from pbsreport.cli.nodes import nodes, vnodes
 
 # load environment if exists
 dotenv.load_dotenv(".env")
@@ -48,3 +48,4 @@ def cli(ctx, pbs_server, pbs_home, pbs_exec):
 
 
 cli.add_command(nodes)
+cli.add_command(vnodes)
