@@ -25,8 +25,8 @@ class PBS:
         if response.code != 0:
             raise shell.CommandError(response.errors(raw=True))
         data = json.loads(response.output(raw=True))
-        data = [d for d in data if name in d["name"]]
-        return NodesSchema().load(data)
+        parsed_data = NodesSchema().load(data)
+        return [d for d in parsed_data if name in d["name"]]
 
 
 class PBSFormatter:
