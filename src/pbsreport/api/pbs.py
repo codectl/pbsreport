@@ -16,7 +16,7 @@ class PBS:
         self._exec = exec
         self.server = server
 
-    def nodes(self, name='', vnodes=False, server=None, sort="name", flags=""):
+    def nodes(self, name="", vnodes=False, server=None, sort="name", flags=""):
         flags = f" -s {server or self.server}"
         flags = f"{flags} -a{' -v' if vnodes else ''}"
         flags = f"{flags} -F json"
@@ -32,7 +32,6 @@ class PBS:
 
 
 class PBSFormatter:
-
     @classmethod
     def nodes(cls, data: typing.List[dict], format="simple"):
         def resource(node_data, resource_type):
@@ -56,22 +55,25 @@ class PBSFormatter:
             "network",
             "comment",
         ]
-        table = map(cls._truncate_row, [
+        table = map(
+            cls._truncate_row,
             [
-                d["name"],
-                d["queue"],
-                utils.colored_line(
-                    line=d["state"], color=utils.color_state(d["state"])
-                ),
-                resource(node_data=d, resource_type="cpus"),
-                resource(node_data=d, resource_type="gpus"),
-                resource(node_data=d, resource_type="mem"),
-                d["cpu_type"],
-                d["network"],
-                d["comment"],
-            ]
-            for d in data
-        ])
+                [
+                    d["name"],
+                    d["queue"],
+                    utils.colored_line(
+                        line=d["state"], color=utils.color_state(d["state"])
+                    ),
+                    resource(node_data=d, resource_type="cpus"),
+                    resource(node_data=d, resource_type="gpus"),
+                    resource(node_data=d, resource_type="mem"),
+                    d["cpu_type"],
+                    d["network"],
+                    d["comment"],
+                ]
+                for d in data
+            ],
+        )
 
         return tabulate.tabulate(table, headers=headers, tablefmt=format)
 
@@ -82,4 +84,4 @@ class PBSFormatter:
     @staticmethod
     def _truncate_column(column):
         column = str(column)
-        return (column[:30] + '..') if len(column) > 30 else column
+        return (column[:30] + "...") if len(column) > 30 else column
