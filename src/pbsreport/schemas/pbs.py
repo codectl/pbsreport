@@ -45,13 +45,10 @@ class NodeSchema(Schema):
 
     @post_load
     def unwrap_envelope(self, data, **_):
-        func = partial(utils.convert_bytes, from_unit="kb", to_unit="b")
-        data["resources_available"]["mem"] = func(
-            utils.remove_units(data["resources_available"]["mem"])
-        )
-        data["resources_assigned"]["mem"] = func(
-            utils.remove_units(data["resources_assigned"]["mem"])
-        )
+        mem_available = data["resources_available"]["mem"]
+        mem_assigned = data["resources_assigned"]["mem"]
+        data["resources_available"]["mem"] = utils.convert_raw_bytes(mem_available)
+        data["resources_assigned"]["mem"] = utils.convert_raw_bytes(mem_available)
         return data
 
 
