@@ -28,7 +28,7 @@ class PBS:
         data = json.loads(response.output(raw=True))
         parsed_data = NodesSchema().load(data)
         sorted_data = sorted(parsed_data, key=operator.itemgetter("name"))
-        return [d for d in parsed_data if name in d["name"]]
+        return [d for d in sorted_data if name in d["name"]]
 
 
 class PBSFormatter:
