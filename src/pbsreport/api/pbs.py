@@ -27,7 +27,7 @@ class PBS:
             raise shell.CommandError(response.errors(raw=True))
         data = json.loads(response.output(raw=True))
         parsed_data = NodesSchema().load(data)
-        sorted_data = sorted(parsed_data, key=operator.itemgetter("name"))
+        sorted_data = sorted(parsed_data, key=operator.itemgetter(sort))
         return [d for d in sorted_data if name in d["name"]]
 
 
