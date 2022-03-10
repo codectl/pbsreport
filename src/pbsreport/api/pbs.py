@@ -1,4 +1,5 @@
 import json
+import operator
 import typing
 
 import shell
@@ -15,7 +16,7 @@ class PBS:
         self._exec = exec
         self.server = server
 
-    def nodes(self, name='', vnodes=False, server=None, flags=""):
+    def nodes(self, name='', vnodes=False, server=None, sort="name", flags=""):
         flags = f" -s {server or self.server}"
         flags = f"{flags} -a{' -v' if vnodes else ''}"
         flags = f"{flags} -F json"
@@ -26,6 +27,7 @@ class PBS:
             raise shell.CommandError(response.errors(raw=True))
         data = json.loads(response.output(raw=True))
         parsed_data = NodesSchema().load(data)
+        sorted_data = sorted(parsed_data, key=operator.itemgetter("name"))
         return [d for d in parsed_data if name in d["name"]]
 
 
