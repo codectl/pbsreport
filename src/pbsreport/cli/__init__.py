@@ -14,7 +14,7 @@ defaults = {
 }
 
 
-@click.group()
+@click.group(dict(help_option_names=['-h', '--help']))
 @click.option(
     "--home",
     "pbs_home",

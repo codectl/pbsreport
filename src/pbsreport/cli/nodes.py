@@ -3,7 +3,7 @@ import click
 from pbsreport.api.pbs import PBSFormatter
 
 
-@click.command()
+@click.command(dict(help_option_names=['-h', '--help']))
 @click.option(
     "--sort",
     "sort",
