@@ -32,8 +32,9 @@ class PBS:
 
 
 class PBSFormatter:
-    @staticmethod
-    def nodes(data: typing.List[dict], format="simple"):
+
+    @classmethod
+    def nodes(cls, data: typing.List[dict], format="simple"):
         def resource(node_data, resource_type):
             available = node_data["resources_available"][resource_type]
             assigned = node_data["resources_assigned"][resource_type]
@@ -55,7 +56,7 @@ class PBSFormatter:
             "network",
             "comment",
         ]
-        table = [
+        table = map(cls._truncate_row, [
             [
                 d["name"],
                 d["queue"],
@@ -70,6 +71,15 @@ class PBSFormatter:
                 d["comment"],
             ]
             for d in data
-        ]
+        ])
 
         return tabulate.tabulate(table, headers=headers, tablefmt=format)
+
+    @classmethod
+    def _truncate_row(cls, row):
+        return map(cls._truncate_column, row)
+
+    @staticmethod
+    def _truncate_column(column):
+        column = str(column)
+        return (column[:90] + '..') if len(column) > 75 else column
