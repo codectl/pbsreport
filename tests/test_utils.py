@@ -48,3 +48,10 @@ def test_human_size():
     assert utils.human_size(1024**2) == "1Mb"
     assert utils.human_size(1024**3) == "1Gb"
     assert utils.human_size(1024**8) == "1Yb"
+
+
+def test_is_vnode():
+    assert utils.is_vnode("hpcnode") is False
+    assert utils.is_vnode("hpcnode[0]") is True
+    assert utils.is_vnode("hpcnode[a]") is False
+    assert utils.is_vnode("hpc123[1]") is True
