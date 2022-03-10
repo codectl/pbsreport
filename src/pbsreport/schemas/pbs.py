@@ -48,7 +48,7 @@ class NodeSchema(Schema):
         mem_available = data["resources_available"]["mem"]
         mem_assigned = data["resources_assigned"]["mem"]
         data["resources_available"]["mem"] = utils.convert_raw_bytes(mem_available)
-        data["resources_assigned"]["mem"] = utils.convert_raw_bytes(mem_available)
+        data["resources_assigned"]["mem"] = utils.convert_raw_bytes(mem_assigned)
         return data
 
 
