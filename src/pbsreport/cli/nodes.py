@@ -14,7 +14,6 @@ from pbsreport.api.pbs import PBSFormatter
 )
 @click.argument(
     'name', nargs=1,
-    help="full or partial node name to search by",
     type=str,
     default=""
 )
