@@ -15,7 +15,7 @@ from pbsreport.api.pbs import PBSFormatter
 @click.argument("name", nargs=1, type=str, default="")
 @click.pass_obj
 def nodes(pbs, name, sort):
-    """Report metrics from cluster nodes."""
+    """Report metrics on current cluster nodes."""
     stdout = PBSFormatter.nodes(data=pbs.nodes(name=name, sort=sort))
     print(stdout)
 
@@ -32,6 +32,6 @@ def nodes(pbs, name, sort):
 @click.argument("name", nargs=1, type=str, default="")
 @click.pass_obj
 def vnodes(pbs, name, sort):
-    """Report metrics from cluster vnodes."""
+    """Report metrics on current cluster vnodes."""
     stdout = PBSFormatter.nodes(data=pbs.nodes(name=name, vnodes=True, sort=sort))
     print(stdout)

@@ -4,5 +4,5 @@ import click
 @click.command()
 @click.pass_obj
 def queues(pbs):
-    """Report status for the current queues."""
+    """Report metrics on the current queues."""
     pass
