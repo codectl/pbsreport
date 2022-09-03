@@ -42,7 +42,7 @@ pytest = "^7.0.1"
 pytest-mock = "^3.7.0"
 
 [tool.poetry.scripts]
-pbsreport = "src.pbsreport:cli"
+pbsreport = "pbsreport:cli"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
